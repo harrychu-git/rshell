@@ -32,14 +32,15 @@ void noCommentZone(string &comments)
 
 void execute(vector<string> commandlist)
 {
-    char** argument = new char*[commandlist.size()+1];
-    for(unsigned i=0; i<commandlist.size(); i++)
+    int sz=commandlist.size();
+    char** argument = new char*[sz+1];
+    for(unsigned i=0; i<sz; i++)
     {
         argument[i] = new char[commandlist.at(i).size()];
         strcpy(argument[i], commandlist.at(i).c_str());
     }
-    argument[commandlist.size()] = '\0';
-    if(-1 ==  execvp(argument[0], argument)){
+    argument[sz] = '\0';
+    if(execvp(argument[0], argument)==-1){
         delete[] argument;
         perror("execvp");
         exit(1);
