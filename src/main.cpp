@@ -34,12 +34,12 @@ void execute(vector<string> commandlist)
 {
     int sz=commandlist.size();
     char** argument = new char*[sz+1];
+    argument[sz] = '\0';
     for(unsigned i=0; i<sz; i++)
     {
         argument[i] = new char[commandlist.at(i).size()];
         strcpy(argument[i], commandlist.at(i).c_str());
     }
-    argument[sz] = '\0';
     if(execvp(argument[0], argument)==-1){
         delete[] argument;
         perror("execvp");
