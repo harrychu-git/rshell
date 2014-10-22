@@ -1,5 +1,5 @@
-==============RSHELL==============
-==========By: Harry Chu===========
+RSHELL By: Harry Chu
+------------------------------------------------------------------------------
 
 
 Rshell is a command shell that can execute commands.
