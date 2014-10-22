@@ -29,7 +29,6 @@ KNOWN BUGS
 
 - echo does not print the correct amount of spaces when more than one space is used
 	(echo "apple                      pie" prints "apple pie").
-- Typing in a single hashtag results in an error message rather than interpreting it as an empty comment.
 
 
 
