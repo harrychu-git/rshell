@@ -65,7 +65,7 @@ int main()
         cout << getlogin() << "@" << hostname << "$ ";
         getline(cin, cmdLine);
         noCommentZone(cmdLine);
-        if(cmdLine.at(0)=='#')
+        if(cmdLine.at(0)=='#')//fix bug if everything is a comment
         {
             goto cont;
         }
@@ -77,7 +77,7 @@ int main()
         string curConnector="";
         
         
-        
+        //determine which connector is being used in this command
         if(cmdLine.find(";")!=string::npos)
         {
             commandlist=tokenizer(instring, ";");
