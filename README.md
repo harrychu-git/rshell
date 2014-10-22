@@ -44,7 +44,7 @@ KNOWN BUGS
   it does not output an error message.
 
 - echo does not print the correct amount of spaces when more than one space is used
-	(echo "apple                      pie" prints "apple pie").
+	(echo "apple				pie" prints "apple pie").
 
 
 
