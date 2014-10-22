@@ -65,6 +65,10 @@ int main()
         cout << getlogin() << "@" << hostname << "$ ";
         getline(cin, cmdLine);
         noCommentZone(cmdLine);
+        if(cmdLine.at(0)=='#')
+        {
+            goto cont;
+        }
         char *instring=new char[cmdLine.size()+1]; //requires 1 index for '\0'
         strcpy(instring, cmdLine.c_str());
         //printf("%s\n", instring);//test if cstring matches input
