@@ -1,9 +1,5 @@
 RSHELL By: Harry Chu
-<<<<<<< HEAD
-------------------------------------------------------------------------------
-=======
 ----------------------------------
->>>>>>> 4eeed57e211862a017e28e797a5805ebc8e21a10
 
 
 Rshell is a command shell that can execute commands.
