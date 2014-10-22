@@ -31,9 +31,9 @@ Open rshell by executing the following commands in your terminal or git shell
 
 CONNECTORS
 ----------------------------------
-The ";" connector will execute all commands in order.
-The "&&" connector will not execute a command if the previous command failed.
-The "||" connector will not execute a command if the previous command succeeded.
+-The ";" connector will execute all commands in order.
+-The "&&" connector will not execute a command if the previous command failed.
+-The "||" connector will not execute a command if the previous command succeeded.
 
 Currently, this version of rshell does not support multiple types of connectors in one command.
 
