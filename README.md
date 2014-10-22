@@ -20,6 +20,22 @@ Usable connectors are:
 -"&&"
 -"||"
 
+HOW TO RUN
+----------------------------------
+Open rshell by executing the following commands in your terminal or git shell
+- git clone  http://github.com/hchu007/rshell.git
+- cd rshell
+- git checkout hw0
+- make
+- bin/rshell
+
+CONNECTORS
+----------------------------------
+The ";" connector will execute all commands in order.
+The "&&" connector will not execute a command if the previous command failed.
+The "||" connector will not execute a command if the previous command succeeded.
+
+Currently, this version of rshell does not support multiple types of connectors in one command.
 
 
 KNOWN BUGS
