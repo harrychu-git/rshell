@@ -1,0 +1,141 @@
+Script started on Tue 21 Oct 2014 08:51:28 PM PDT
+]0;hchu007@alpha-26:~/Desktop[?1034h~/Desktop
+hchu007@alpha-26 $ ls
+[0m[01;32ma.out[0m  exec.script  main.cpp  main.cpp~
+[m]0;hchu007@alpha-26:~/Desktop~/Desktop
+hchu007@alpha-26 $ g++ [K[K[K[K./a.out
+hchu007@alpha-26.cs.ucr.edu$ #TIME T      BREAKING THE RSHELL
+hchu007@alpha-26.cs.ucr.edu$ #READY!
+hchu007@alpha-26.cs.ucr.edu$ #SET
+hchu007@alpha-26.cs.ucr.edu$ #GO!
+hchu007@alpha-26.cs.ucr.edu$ #test commands
+hchu007@alpha-26.cs.ucr.edu$ ls
+a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ ls -a
+.  ..  a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ ls - a
+ls: cannot access -: No such file or directory
+ls: cannot access a: No such file or directory
+hchu007@alpha-26.cs.ucr.edu$ l s
+execvp: No such file or directory
+hchu007@alpha-26.cs.ucr.edu$ pwd   ls -a -F
+./  ../  a.out*  exec.script  main.cpp	main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ pwd
+/home/csmajs/hchu007/Desktop
+hchu007@alpha-26.cs.ucr.edu$ p w d
+execvp: No such file or directory
+hchu007@alpha-26.cs.ucr.edu$ ecjo  ho
+
+hchu007@alpha-26.cs.ucr.edu$ echo cat
+cat
+hchu007@alpha-26.cs.ucr.edu$ echo cat dog
+cat dog
+hchu007@alpha-26.cs.ucr.edu$ echo this is                    a big  ug
+this is a bug
+hchu007@alpha-26.cs.ucr.edu$  pwd
+/home/csmajs/hchu007/Desktop
+hchu007@alpha-26.cs.ucr.edu$ pwd  
+/home/csmajs/hchu007/Desktop
+hchu007@alpha-26.cs.ucr.edu$  pwd    pwd 
+/home/csmajs/hchu007/Desktop
+hchu007@alpha-26.cs.ucr.edu$  pwd    
+/home/csmajs/hchu007/Desktop
+hchu007@alpha-26.cs.ucr.edu$ echo -e "\ttab"
+"	tab"
+hchu007@alpha-26.cs.ucr.edu$ echo -e \ttab
+	tab
+hchu007@alpha-26.cs.ucr.edu$ #test connectors ; && and ||
+hchu007@alpha-26.cs.ucr.edu$ echo cat; ec   echo dog
+cat
+dog
+hchu007@alpha-26.cs.ucr.edu$ echo cat; echo dog
+cat
+dog
+hchu007@alpha-26.cs.ucr.edu$ echo cat ;echo dog
+cat
+dog
+hchu007@alpha-26.cs.ucr.edu$ echo cat ; echo dog
+cat
+dog
+hchu007@alpha-26.cs.ucr.edu$ false && echo cat
+hchu007@alpha-26.cs.ucr.edu$ true && echo cat
+cat
+hchu007@alpha-26.cs.ucr.edu$ false || echo dog
+dog
+hchu007@alpha-26.cs.ucr.edu$ true || echo dog
+hchu007@alpha-26.cs.ucr.edu$ echo a; eh cho b; echo c; echo d; echo e
+a
+b
+c
+d
+e
+hchu007@alpha-26.cs.ucr.edu$ pwd;
+/home/csmajs/hchu007/Desktop
+hchu007@alpha-26.cs.ucr.edu$ pwd;;
+/home/csmajs/hchu007/Desktop
+hchu007@alpha-26.cs.ucr.edu$ cd bin      ls
+a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ cd ..
+execvp: No such file or directory
+hchu007@alpha-26.cs.ucr.edu$ echo yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa; y; echo yay
+yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay
+yay
+hchu007@alpha-26.cs.ucr.edu$ ;ls
+a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ &&ls
+a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ || ls
+a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ ;;ks  ls
+a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ && && ls
+hchu007@alpha-26.cs.ucr.edu$ || || ls
+a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ ;
+hchu007@alpha-26.cs.ucr.edu$ &&
+hchu007@alpha-26.cs.ucr.edu$ ||
+hchu007@alpha-26.cs.ucr.edu$ #test comments
+hchu007@alpha-26.cs.ucr.edu$ #ls
+hchu007@alpha-26.cs.ucr.edu$ ls #-a
+a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ echo #this is a hashtag
+
+hchu007@alpha-26.cs.ucr.edu$ #
+hchu007@alpha-26.cs.ucr.edu$ test    #test exit command
+hchu007@alpha-26.cs.ucr.edu$ exit
+]0;hchu007@alpha-26:~/Desktop~/Desktop
+hchu007@alpha-26 $ ./a.out
+hchu007@alpha-26.cs.ucr.edu$ ls -a && exit
+.  ..  a.out  exec.script  main.cpp  main.cpp~
+]0;hchu007@alpha-26:~/Desktop~/Desktop
+hchu007@alpha-26 $ ./a.out
+hchu007@alpha-26.cs.ucr.edu$ do-not-exit exit
+execvp: No such file or directory
+hchu007@alpha-26.cs.ucr.edu$ exit do  -not-exit
+execvp: No such file or directory
+hchu007@alpha-26.cs.ucr.edu$ echo exit
+exit
+hchu007@alpha-26.cs.ucr.edu$ ls; touch exit; ls; rm exit
+a.out  exec.script  main.cpp  main.cpp~
+a.out  exec.script  exit  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ ls
+a.out  exec.script  main.cpp  main.cpp~
+hchu007@alpha-26.cs.ucr.edu$ #running the program in the program will require m one      e more exit for each execution
+hchu007@alpha-26.cs.ucr.edu$ ./a.out
+hchu007@alpha-26.cs.ucr.edu$ ./a.out
+hchu007@alpha-26.cs.ucr.edu$ exit
+hchu007@alpha-26.cs.ucr.edu$ exit
+hchu007@alpha-26.cs.ucr.edu$ exit
+]0;hchu007@alpha-26:~/Desktop~/Desktop
+hchu007@alpha-26 $ ./a.out
+hchu007@alpha-26.cs.ucr.edu$ #all done te           finished testing
+hchu007@alpha-26.cs.ucr.edu$ #shutting off...   
+hchu007@alpha-26.cs.ucr.edu$ #.
+hchu007@alpha-26.cs.ucr.edu$ #.
+hchu007@alpha-26.cs.ucr.edu$ #.
+hchu007@alpha-26.cs.ucr.edu$ exit
+]0;hchu007@alpha-26:~/Desktop~/Desktop
+hchu007@alpha-26 $ exit
+exit
+
+Script done on Tue 21 Oct 2014 08:58:36 PM PDT
