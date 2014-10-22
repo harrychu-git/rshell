@@ -32,7 +32,7 @@ void noCommentZone(string &comments)
 
 void execute(vector<string> commandlist)
 {
-    int sz=commandlist.size();
+    unsigned sz=commandlist.size();
     char** argument = new char*[sz+1];
     argument[sz] = '\0';
     for(unsigned i=0; i<sz; i++)
