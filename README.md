@@ -40,11 +40,11 @@ Currently, this version of rshell does not support multiple types of connectors 
 
 KNOWN BUGS
 ----------------------------------
-- When a command is typed in with two connectors side by side, ("; ;", "&& &&", "|| ||")
+- When a command is typed in with multiple connectors side by side, ("; ;", "&& &&", "|| ||")
   it does not output an error message.
 
-- echo does not print the correct amount of spaces when more than one space is used
-	(echo "apple				pie" prints "apple pie").
+- echo does not print the correct amount of spaces when multiple spaces are next to each other.
+- A command with a connector at the front (";" or ";ls") will not output an error.
 
 
 
