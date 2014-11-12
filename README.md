@@ -95,6 +95,7 @@ KNOWN BUGS
 - Every output is printed all on one line
 - The output when using -R lists the next folder being output as a folder inside the folder currently being output
 - When using -R aving a chain of folders inside folders (root<--dir1<--dir2) causes all of the files to be output in the "deepest" folder
+- Running bin/ls will create memory leaks
 
 
 
