@@ -21,9 +21,8 @@
 using namespace std;
 
 void recursion(char*, int);
-int findszlk(char*, bool);
 int blocks(char*, int);
-void printl(struct stat, int, int, char*, char*);
+void printl(struct stat, char*, char*);
 
 
 /*
@@ -156,12 +155,10 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
         perror("opendir");
         exit(1);
     }
-    int blk, maxsz, maxlk;
+    int blk;
     if(flag%3==0)
     {
         blk=blocks(dirnm,flag);
-        maxsz=findszlk(dirnm,true);
-        maxlk=findszlk(dirnm,false);
     }
     if(flag%3==0)
             cout<<"Total: "<<(blk/2)<<endl;
@@ -211,7 +208,7 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
         }
         else if (flag%2==0 && flag%3==0 && flag%5==0)//-a, -l, -R FIXME
         {
-            printl(s,maxsz,maxlk,pathName, cstrings.at(i));
+            printl(s,pathName, cstrings.at(i));
             if((s.st_mode&S_IFDIR)&&cstrings.at(i)[0]!='.')
             {
                 cout << endl << endl;
@@ -220,7 +217,7 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
         }
         else if (flag%2==0 && flag%3==0 && flag%5!=0)//-a, -l
         {
-            printl(s,maxsz,maxlk,pathName,cstrings.at(i));
+            printl(s,pathName,cstrings.at(i));
         }
         else if (flag%2==0 && flag%3!=0 && flag%5==0)//-a, -R
         {
@@ -248,7 +245,7 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
         else if (flag%2!=0 && flag%3==0 && flag%5==0)//-l, -R FIXME
         {
             if(cstrings.at(i)[0]!='.')
-                printl(s,maxsz,maxlk,pathName, cstrings.at(i));
+                printl(s,pathName, cstrings.at(i));
             if((s.st_mode&S_IFDIR)&&cstrings.at(i)[0]!='.')
             {
                 cout << endl << endl;
@@ -276,7 +273,7 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
         else if (flag%2!=0 && flag%3==0 && flag%5!=0)//-l
         {
             if(cstrings.at(i)[0]!='.')
-                printl(s,maxsz,maxlk,pathName,cstrings.at(i));
+                printl(s,pathName,cstrings.at(i));
         }
         else if (flag%2!=0 && flag%3!=0 && flag%5==0)//-R
         {
@@ -308,46 +305,6 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
     }
 }
 
-int findszlk(char* dirnm, bool isSz)
-{
-    DIR *dirStream;
-    dirent *curDir;
-    int max=0;
-    if(!(dirStream=opendir(dirnm)))
-    {
-        perror("opendir");
-    }
-    while((curDir=readdir(dirStream)))
-    {
-        int len=1;
-        if(errno!=0)
-            perror("readdir");
-        struct stat s;
-        char pathName[1000];
-        strcpy(pathName,dirnm);
-        strcat(pathName,"/");
-        strcat(pathName,curDir->d_name);
-        if(stat(pathName,&s)==-1)
-            perror("stat");
-        if (isSz)
-        {
-            int temp=s.st_size;
-            while(temp/=10)
-                len++;
-        }
-        else
-        {
-            int temp=s.st_nlink;
-            while(temp/=10)
-                len++;
-        }
-        if (len>max)
-            max=len;
-    }
-    return max;
-    if(closedir(dirStream)==-1)
-        perror("closedir");
-}
 int blocks(char* dirnm, int flag)
 {
     int block=0;
@@ -381,7 +338,7 @@ int blocks(char* dirnm, int flag)
     return block;
 }
 
-void printl(struct stat s, int maxsz, int maxlk, char* str, char* name)
+void printl(struct stat s, char* str, char* name)
 {
     string dirns=str;
     string command = "stat --printf='%A %h %U %G %s' " + dirns;
