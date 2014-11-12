@@ -217,7 +217,7 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
         }
         else if (flag%2==0 && flag%3==0 && flag%5!=0)//-a, -l
         {
-            printl(s,maxsz,maxlk,cstrings.at(i),cstrings.at(i));
+            printl(s,maxsz,maxlk,pathName,cstrings.at(i));
         }
         else if (flag%2==0 && flag%3!=0 && flag%5==0)//-a, -R
         {
@@ -244,7 +244,6 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
         }
         else if (flag%2!=0 && flag%3==0 && flag%5==0)//-l, -R FIXME
         {
-            //cout << cstrings.at(i)[0] << "  " << cstrings.at(i) << "    " << pathName << "!!!!!!!!!!!!!!!!!!!!!!!" << endl;
             if(cstrings.at(i)[0]!='.')
                 printl(s,maxsz,maxlk,pathName, cstrings.at(i));
             if((s.st_mode&S_IFDIR)&&cstrings.at(i)[0]!='.')
@@ -274,7 +273,7 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
         else if (flag%2!=0 && flag%3==0 && flag%5!=0)//-l
         {
             if(cstrings.at(i)[0]!='.')
-                printl(s,maxsz,maxlk,cstrings.at(i),cstrings.at(i));
+                printl(s,maxsz,maxlk,pathName,cstrings.at(i));
         }
         else if (flag%2!=0 && flag%3!=0 && flag%5==0)//-R
         {
@@ -373,12 +372,13 @@ int blocks(char* dirnm, int flag)
                 block+=s.st_blocks;
         }
     }
+    if(closedir(dirStream)==-1)
+        perror("closedir");
     return block;
 }
 
 void printl(struct stat s, int maxsz, int maxlk, char* str, char* name)
 {
-    //cout << str << "!!!!!!!!!!!!!!!!!!!!!!" << endl;
     string dirns=str;
     string command = "stat --printf='%A %h %U %G %s' " + dirns;
     system(command.c_str());
