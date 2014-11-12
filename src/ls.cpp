@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     //a=2, l=3, R=5, a&l=6, a&R=10, l&R=15, a&l&R=30, no flags=1
     //allows use of modulos
     unsigned flag=1;
-    for(unsigned i=1; i<argc; i++)
+    for(int i=1; i<argc; i++)
     {
         if(!strcmp(argv[i],"-a"))
             flag*=2;
@@ -85,10 +85,13 @@ int main(int argc, char** argv)
         }
     }
     if (files==false)
-            recursion(".",flag);//./rshell
+    {
+	    char tmp[]=".";
+            recursion(tmp,flag);//./rshell
+    }
     else
     {
-        for (int i=0; i<v.size(); i++)
+        for (unsigned i=0; i<v.size(); i++)
         {
             DIR* dirStream;
             dirent* curDir;
@@ -163,12 +166,12 @@ void recursion(char* dirnm, int flag)//a,l,r = 2,3,5
     if(flag%3==0)
             cout<<"Total: "<<(blk/2)<<endl;
     vector <char*> cstrings;
-    while(curDir=readdir(dirStream))
+    while((curDir=readdir(dirStream)))
     {
         cstrings.push_back(curDir->d_name);
     }
     sort(cstrings.begin(),cstrings.end());
-    for (int i=0; i<cstrings.size(); i++)
+    for (unsigned i=0; i<cstrings.size(); i++)
     {
         if (errno!=0)
         {
@@ -314,7 +317,7 @@ int findszlk(char* dirnm, bool isSz)
     {
         perror("opendir");
     }
-    while(curDir=readdir(dirStream))
+    while((curDir=readdir(dirStream)))
     {
         int len=1;
         if(errno!=0)
@@ -341,6 +344,7 @@ int findszlk(char* dirnm, bool isSz)
         if (len>max)
             max=len;
     }
+    return max;
     if(closedir(dirStream)==-1)
         perror("closedir");
 }
@@ -353,7 +357,7 @@ int blocks(char* dirnm, int flag)
     {
         perror("opendir");
     }
-    while(curDir=readdir(dirStream))
+    while((curDir=readdir(dirStream)))
     {
         if(errno!=0)
             perror("readdir");
