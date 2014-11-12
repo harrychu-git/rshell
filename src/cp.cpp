@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
 	bool Argc3 = false;
 	char*  op;
 	bool opTrue = false;
-	cout << argc << endl;
 	if(argc == 3)
 	{
 		Argc3 = true;
