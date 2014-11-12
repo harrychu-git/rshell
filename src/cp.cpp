@@ -16,22 +16,69 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+	vector<string> files;
 	bool Argc3 = false;
+	char*  op;
+	bool opTrue = false;
 	if(argc == 3)
-		Argc3 = true;
-	else if((strcmp(argv[3],"inout")) && (strcmp(argv[3],"rw1")) && (strcmp(argv[3],"rw2")))
 	{
-		cerr << "Syntax Error: Please enter the following as parameters: \nInput File\nOutput File\nOptional Parameter (inout, rw1, rw2)" << endl;
+		Argc3 = true;
+		for(int i=0;i < argc; i++)
+			files.push_back(argv[i]);
+	}
+	else if(argc == 4)
+	{
+		for(int i=0;i<argc;i++)
+		{
+			if(strcmp(argv[i],"-inout")==0)
+			{
+				op = argv[i];
+				opTrue = true;
+			}
+			else if(strcmp(argv[i],"-rw1")==0)
+			{
+				op = argv[i];
+				opTrue = true;
+			}
+			else if(strcmp(argv[i], "-rw2")==0)
+			{
+				op = argv[i];
+				opTrue = true;
+			}
+			else
+			{
+				files.push_back(argv[i]);
+			}
+		}	
+	}
+	else
+	{
+		cout << "Error: Incorrect input, the possible arguments are (Input files, Output files, and optional parameters('-inout', '-rw1', '-rw2'))" << endl;
 		exit(1);
 	}
+	if(!Argc3 && !opTrue)
+	{
+		cout << "Error: Incorrect input, the possible arguments are (Input files, Output files, and optional parameters('-inout', '-rw1', '-rw2'))" << endl;
+	
+	}
+	ifstream f(files[2].c_str());
+	if(f.good())
+	{
+		f.close();
+		cout << "Error: Output file already exist." << endl;
+		exit(1);
+	}
+	else
+	{
+		f.close();
+	}	
 	Timer t;
 	double eTime;
 	t.start();
-	if(!Argc3 && strcmp(argv[3],"inout"))
+	if(!Argc3 && strcmp(op,"-inout"))
 	{
-		cout << "hi " <<  argv[1] << " " << argv[2] << endl;
-		ifstream in (argv[1]);
-		ofstream out (argv[2]);
+		ifstream in (files[1].c_str());
+		ofstream out (files[2].c_str());
 	
 		while(in.good())
 		{
@@ -39,17 +86,19 @@ int main(int argc, char *argv[])
 			if(in.good())
 			out.put(c);
 		}	
+		in.close();
+		out.close();
 	}
-	else if(!Argc3 && strcmp(argv[3],"rw1"))
+	else if(!Argc3 && strcmp(op,"-rw1"))
 	{
-		int infd= open(argv[1],O_RDONLY);
+		int infd= open(files[1].c_str(),O_RDONLY);
 		if (infd == -1)
 		{
 			perror("open");
 			exit(1);
 		}
 		//What the fuck?
-		int outfd = open(argv[2],O_WRONLY | O_CREAT, 0777);
+		int outfd = open(files[2].c_str(),O_WRONLY | O_CREAT, 0777);
 		if (outfd == -1)
 		{
 			perror("open");
@@ -72,15 +121,15 @@ int main(int argc, char *argv[])
 		}	
 	}
 	
-	else if(Argc3 || strcmp(argv[3],"rw2"))
+	else if(Argc3 || strcmp(op,"-rw2"))
 	{
-		int infd= open(argv[1],O_RDONLY);
+		int infd= open(files[1].c_str(),O_RDONLY);
 		if (infd == -1)
 		{
 			perror("open");
 			exit(1);
 		}
-		int outfd = open(argv[2],O_WRONLY | O_CREAT);
+		int outfd = open(files[2].c_str(),O_WRONLY | O_CREAT,0777);
 		if (outfd == -1)
 		{
 			perror("open");
@@ -101,6 +150,8 @@ int main(int argc, char *argv[])
 			perror("read");
 			exit(1);
 		}
+		close(infd);
+		close(outfd);
 	}
 	t.elapsedWallclockTime(eTime);
 	cout << eTime << endl;
