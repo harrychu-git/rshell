@@ -45,7 +45,7 @@ void checkIO(char** args)
             if((dup2(fd,0))==-1)
                 perror("dup2");
         }
-        if(!strcmp(args[i],">"))
+        else if(!strcmp(args[i],">"))
         {
             if(!strcmp(args[i+1],">"))//found > and > next to each other, ">>"
             {
@@ -56,14 +56,16 @@ void checkIO(char** args)
                 if((dup2(fd,1))==-1)
                     perror("dup2");
                 i++;
+                break;
             }
-            else
+            else// ">"
             {
                 args[i]=0;
                 if((open(args[i+1],O_CREAT|O_WRONLY|O_TRUNC,0666))==-1)
                     perror("open");
                 if((dup2(fd,1))==-1)
                     perror("dup2");
+                break;
             }
             
         }
