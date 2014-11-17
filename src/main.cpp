@@ -51,7 +51,7 @@ void checkIO(char** args)
             {
                 args[i]=0;
                 args[i+1]=0;
-                if((open(args[i+2],O_CREAT|O_WRONLY|O_APPEND,0666))==-1)
+                if((fd=open(args[i+2],O_CREAT|O_WRONLY|O_APPEND,0666))==-1)
                     perror("open");
                 if((dup2(fd,1))==-1)
                     perror("dup2");
@@ -61,7 +61,7 @@ void checkIO(char** args)
             else// ">"
             {
                 args[i]=0;
-                if((open(args[i+1],O_CREAT|O_WRONLY|O_TRUNC,0666))==-1)
+                if((fd=open(args[i+1],O_CREAT|O_WRONLY|O_TRUNC,0666))==-1)
                     perror("open");
                 if((dup2(fd,1))==-1)
                     perror("dup2");
