@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
+#include <fcntl.h>
+#include <string>
 using namespace std;
 
 vector <string> tokenizer(char s[], string connector)
@@ -30,6 +32,44 @@ void noCommentZone(string &comments)
         comments=comments.substr(0,comments.find('#'));
 }
 
+void checkIO(char** args)
+{
+    for(int i=0; args[i]!='\0'; i++)
+    {
+        int fd=0;
+        if(!strcmp(args[i],"<"))
+        {
+            args[i]=0;
+            if((fd=open(args[i+1],O_RDONLY))==-1)
+                perror("open");
+            if((dup2(fd,0))==-1)
+                perror("dup2");
+        }
+        if(!strcmp(args[i],">"))
+        {
+            if(!strcmp(args[i+1],">"))//found > and > next to each other, ">>"
+            {
+                args[i]=0;
+                args[i+1]=0;
+                if((open(args[i+2],O_CREAT|O_WRONLY|O_APPEND,0666))==-1)
+                    perror("open");
+                if((dup2(fd,1))==-1)
+                    perror("dup2");
+                i++;
+            }
+            else
+            {
+                args[i]=0;
+                if((open(args[i+1],O_CREAT|O_WRONLY|O_TRUNC,0666))==-1)
+                    perror("open");
+                if((dup2(fd,1))==-1)
+                    perror("dup2");
+            }
+            
+        }
+    }
+}
+
 void execute(vector<string> commandlist)
 {
     unsigned sz=commandlist.size();
@@ -40,6 +80,7 @@ void execute(vector<string> commandlist)
         argument[i] = new char[commandlist.at(i).size()];
         strcpy(argument[i], commandlist.at(i).c_str());
     }
+    checkIO(argument);
     if(execvp(argument[0], argument)==-1){
         delete[] argument;
         perror("execvp");
@@ -47,17 +88,91 @@ void execute(vector<string> commandlist)
     }
 }
 
+
+
+void ReplaceStringInPlace(string& subject, const string& search, const string& replace) 
+{
+    size_t pos = 0;
+    while ((pos = subject.find(search, pos)) != string::npos) 
+    {
+         subject.replace(pos, search.length(), replace);
+         pos += replace.length();
+    }
+}
+
+void connectorFixer(string& s)
+{
+    ReplaceStringInPlace(s, "<", " < ");
+    ReplaceStringInPlace(s, ">>", " >> ");
+    ReplaceStringInPlace(s, ">", " > ");
+    ReplaceStringInPlace(s, "|", " | ");
+}
+void pipes1(vector<string>);
+
+void pipes2(vector<string> pt1, vector<string> pt2)
+{
+    int fd[2];
+	if(pipe(fd) == -1)
+	    perror("pipe");
+	    int forktest=fork();
+	    if (forktest==-1)
+	        perror("fork");
+        else if (forktest==0)//child
+        {
+            //check for I/O redirection
+            if(dup2(fd[1],1)==-1)
+                perror("dup2");
+            if(-1==close(fd[0]))
+                perror("close");
+            execute(pt1);
+        }
+        else //parent
+        {
+            int restore;
+            int status=0;
+            if((restore=dup(0))==-1)
+                perror("dup");
+            if(dup2(fd[0],0)==-1)
+                perror("dup2");
+            if(close(fd[1])==-1)
+                perror("close");
+            if(waitpid(-1, &status, 0)==-1)
+                perror("wait");
+            pipes1(pt2);
+            if(dup2(restore,0)==-1)
+                perror("dup2");
+        }
+        
+}
+
+void pipes1(vector<string> cmdList)//passes in a command that was seprated by connectors
+{
+    vector<string> pt1;
+    vector<string> pt2;
+    unsigned i;
+    for(i=0;i<cmdList.size()&&cmdList.at(i)!="|"; i++)
+    {
+        pt1.push_back(cmdList.at(i));
+    }
+    for (i=i+1; i<cmdList.size(); i++)
+    {
+        pt2.push_back(cmdList.at(i));
+    }
+    if (pt2.size()==0)//no pipes
+    {
+        execute(cmdList);
+    }
+    else
+    {
+        pipes2(pt1, pt2);
+    }
+}
+
+
 int main()
 {
     char hostname[128];
     gethostname(hostname,sizeof hostname);
-    /*char myString[] = "ls &&ls ;ls; ls";
-    vector<string> tokens;
-    tokens=tokenizer(myString);
-    for (int i=0; i<tokens.size(); i++)
-    {
-        cout << tokens.at(i) << endl;
-    }*/
     while(1)
     {
         cont:
@@ -69,9 +184,9 @@ int main()
         {
             goto cont;
         }
+        connectorFixer(cmdLine); //set up cmdLine to find I/O and pipes
         char *instring=new char[cmdLine.size()+1]; //requires 1 index for '\0'
         strcpy(instring, cmdLine.c_str());
-        //printf("%s\n", instring);//test if cstring matches input
         //the vector that holds the commands to be converted and executed
         vector<string> commandlist;
         string curConnector="";
@@ -93,10 +208,11 @@ int main()
             commandlist=tokenizer(instring, "||");
             curConnector="||";
         }
-        //edge case
+        //edge case NO CONNECTORS
         if(curConnector=="")
         {
             int status=0;
+
             commandlist=tokenizer(instring, " ");
             //check if vector has one index and contains "exit"
             if(commandlist.size()==1&&commandlist.at(0)=="exit")
@@ -112,7 +228,7 @@ int main()
             }
             else if(forktest==0)
             {
-                execute(commandlist);
+                pipes1(commandlist);
             }
             else
             {
@@ -128,6 +244,7 @@ int main()
                 }
             }
         }
+
         vector<vector<string> >exV;
         //fill vector with vectors of strings (eg "ls", "-a")
         for (unsigned i=0; i<commandlist.size(); i++)
@@ -153,7 +270,7 @@ int main()
             }
             else if(forktest==0)//CHILD
             {
-                execute(exV.at(i));
+                pipes1(exV.at(i));
             }
             else//PARENT
             {
