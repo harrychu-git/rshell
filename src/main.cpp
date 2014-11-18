@@ -56,7 +56,6 @@ void checkIO(char** args)
                 if((dup2(fd,1))==-1)
                     perror("dup2");
                 i++;
-                break;
             }
             else// ">"
             {
@@ -65,7 +64,6 @@ void checkIO(char** args)
                     perror("open");
                 if((dup2(fd,1))==-1)
                     perror("dup2");
-                break;
             }
             
         }
