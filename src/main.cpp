@@ -107,10 +107,26 @@ void connectorFixer(string& s)
     ReplaceStringInPlace(s, ">", " > ");
     ReplaceStringInPlace(s, "|", " | ");
 }
-void pipes1(vector<string>);
-
-void pipes2(vector<string> pt1, vector<string> pt2)
+void pipes1(vector<string> cmdList)//passes in a command that was seprated by connectors
 {
+    vector<string> pt1;
+    vector<string> pt2;
+    unsigned i;
+    for(i=0;i<cmdList.size()&&cmdList.at(i)!="|"; i++)
+    {
+        pt1.push_back(cmdList.at(i));
+    }
+    for (i=i+1; i<cmdList.size(); i++)
+    {
+        pt2.push_back(cmdList.at(i));
+    }
+    if (pt2.size()==0)//no pipes
+    {
+        execute(cmdList);
+    }
+    else
+    {
+        //pipes2(pt1,pt2);
     int fd[2];
 	if(pipe(fd) == -1)
 	    perror("pipe");
@@ -142,29 +158,6 @@ void pipes2(vector<string> pt1, vector<string> pt2)
             if(dup2(restore,0)==-1)
                 perror("dup2");
         }
-        
-}
-
-void pipes1(vector<string> cmdList)//passes in a command that was seprated by connectors
-{
-    vector<string> pt1;
-    vector<string> pt2;
-    unsigned i;
-    for(i=0;i<cmdList.size()&&cmdList.at(i)!="|"; i++)
-    {
-        pt1.push_back(cmdList.at(i));
-    }
-    for (i=i+1; i<cmdList.size(); i++)
-    {
-        pt2.push_back(cmdList.at(i));
-    }
-    if (pt2.size()==0)//no pipes
-    {
-        execute(cmdList);
-    }
-    else
-    {
-        pipes2(pt1, pt2);
     }
 }
 
