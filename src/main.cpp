@@ -144,16 +144,16 @@ void pipes1(vector<string> cmdList)//passes in a command that was seprated by co
         }
         else //parent
         {
-            int restore;
             int status=0;
+            if(waitpid(-1, &status, 0)==-1)
+                perror("wait");
+            int restore;
             if((restore=dup(0))==-1)
                 perror("dup");
             if(dup2(fd[0],0)==-1)
                 perror("dup2");
             if(close(fd[1])==-1)
                 perror("close");
-            if(waitpid(-1, &status, 0)==-1)
-                perror("wait");
             pipes1(pt2);
             if(dup2(restore,0)==-1)
                 perror("dup2");
