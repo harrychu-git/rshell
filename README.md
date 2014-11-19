@@ -81,7 +81,7 @@ Files and folders can also be used as parameters. When this happens, ls prints o
 
 HOW TO RUN
 ----------------------------------
-Open rshell by executing the following commands in your terminal or git shell
+Open ls by executing the following commands in your terminal or git shell
 - git clone  http://github.com/hchu007/rshell.git
 - cd rshell
 - git checkout hw0
@@ -106,4 +106,53 @@ KNOWN BUGS
 
 Report unknown bugs to hchu007@ucr.edu.
 
+
+
+
+
+
+I/O Redirection and Piping By: Harry Chu
+----------------------------------
+As of November 18th, 2014, rshell is now capable of piping and input/output redirection. Input and output redirection allows input and output beyond the use of stdin, stdout, and stderr. Piping is used to connect multiple data processes.
+
+HOW TO RUN
+----------------------------------
+Open rshell by executing the following commands in your terminal or git shell
+- git clone  http://github.com/hchu007/rshell.git
+- cd rshell
+- git checkout hw0
+- make
+- bin/rshell
+
+HOW TO USE I/O REDIRECTION & PIPING
+------------------------------------
+There are three symbols for I/O redirection ('<', '>', ">>") and one for piping ('|').
+1. < is used to accept input from a file as opposed to stdin. For example...
+  - wc -l < main.cpp    will count the amount of lines in main.cpp and output it to stdout.
+2. > is used to redirect stdout to a file. For example...
+  - ls > output1.txt    will store a list of all files and folders in the current directory to output1.txt.
+3. >> is similar to > but instead of replacing all of the contents ('>'), it will append onto the contents. For example...
+  - echo copyright-2014 >> LICENSE    will append "copyright-2014" at the end of LICENSE
+4. | is a general purpose chaining tool. It can be used in a variety of different, yet useful ways. For example...
+  - history | tail -10    will list the last 10 commands executed.
+
+All of these symbols can be chained together in the same command. Here are some examples!
+ - 2013Names.txt | sort >> 2012Names.txt will sort all of the content in 2013Names.txt and append it at the end of 2012Names.txt
+ - wc -l < README > readmeLines.txt will count the lines in README and store it in readmeLines.txt
+
+KNOWN BUGS
+----------------------------------
+- Cannot handle multiple connectors of the same type. However, using two different connectors will still work.
+- Sometimes creates junk files while using output redirection (results have not been duplicated).
+- Some invalid commands will create an infinite loop that must be stopped/killed/interrupted.
+
+
+
+
+
+
+
+
+
+Report unknown bugs to hchu007@ucr.edu.
 
