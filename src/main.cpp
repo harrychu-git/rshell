@@ -11,6 +11,12 @@
 #include <string>
 using namespace std;
 
+
+void CTRLC(int i)
+{
+    signal(SIGINT,SIG_IGN);
+}
+
 vector <string> tokenizer(char s[], string connector)
 {
     const char* c2=connector.c_str();
@@ -144,16 +150,16 @@ void pipes1(vector<string> cmdList)//passes in a command that was seprated by co
         }
         else //parent
         {
-            int status=0;
-            if(waitpid(-1, &status, 0)==-1)
-                perror("wait");
             int restore;
+            int status=0;
             if((restore=dup(0))==-1)
                 perror("dup");
             if(dup2(fd[0],0)==-1)
                 perror("dup2");
             if(close(fd[1])==-1)
                 perror("close");
+            if(waitpid(-1, &status, 0)==-1)
+                perror("wait");
             pipes1(pt2);
             if(dup2(restore,0)==-1)
                 perror("dup2");
@@ -165,11 +171,19 @@ void pipes1(vector<string> cmdList)//passes in a command that was seprated by co
 int main()
 {
     char hostname[128];
-    gethostname(hostname,sizeof hostname);
+    if(gethostname(hostname,sizeof hostname)==-1)
+    {
+        perror("gethostname");
+    }
     while(1)
     {
         cont:
+        
         string cmdLine;
+        char buffer[BUFSIZ];
+	    if(!getcwd(buffer, sizeof(buffer))) //potential error
+	    	perror("getcwd");
+    	cout<<buffer<<endl;
         cout << getlogin() << "@" << hostname << "$ ";
         getline(cin, cmdLine);
         noCommentZone(cmdLine);
@@ -210,8 +224,28 @@ int main()
             //check if vector has one index and contains "exit"
             if(commandlist.size()==1&&commandlist.at(0)=="exit")
             {
+                cout << commandlist.at(0) << endl;
+                cout << commandlist.at(0) << endl;
                 delete[] instring;
                 goto end;
+            }
+            signal(SIGINT, CTRLC);
+            if(commandlist.at(0)=="cd")
+            {
+                if(commandlist.size()==1)
+                {
+                    if(chdir(getenv("HOME"))==-1)
+                        perror("chdir");
+                }
+                else
+                {
+                    char tmp[commandlist.size()+1];
+                    strcpy(tmp, commandlist.at(1).c_str());
+                    if(chdir(tmp)==-1)
+                        perror("chdir");
+                    goto cont;
+                    
+                }
             }
             int forktest=fork();
             if (forktest==-1)
@@ -255,52 +289,71 @@ int main()
                 delete[] instring;
                 goto end;
             }
-            int forktest=fork();
-            if (forktest==-1)
+            signal(SIGINT, CTRLC);
+            if(exV.at(i).at(0)=="cd")
             {
-                perror("fork");
-                exit(1);
-            }
-            else if(forktest==0)//CHILD
-            {
-                pipes1(exV.at(i));
-            }
-            else//PARENT
-            {
-                if(waitpid(-1, &status, 0)==-1)
+                if(exV.at(i).size()==1)
                 {
-                    perror("waitpid");
-                    exit(1);
+                    if(chdir(getenv("HOME"))==-1)
+                        perror("chdir");
                 }
                 else
                 {
-                    if(curConnector=="")
-                    {
-                        break;
-                    }
-                    else if(curConnector==";")
-                    {}//do nothing and execute next command
-                    else if(curConnector=="||")
-                    {
-                        if (status<=0)
-                        {
-                            break;
-                        }
-                    }
-                    else if(curConnector=="&&")
-                    {
-                        if(status>0)
-                        {
-                            break;
-                        }
-                    }
+                    char tmp[exV.at(i).at(1).size()+1];
+                    strcpy(tmp,exV.at(i).at(1).c_str());
+                    if(chdir(tmp)==-1)
+                        perror("chdir");
                 }
-                
+                continue;
             }
+            else
+            {
+                int forktest=fork();
+                if (forktest==-1)
+                {
+                    perror("fork");
+                    exit(1);
+                }
+                else if(forktest==0)//CHILD
+                {
+                    pipes1(exV.at(i));
+                }
+                else//PARENT
+                {
+                    if(waitpid(-1, &status, 0)==-1)
+                    {
+                        perror("waitpid");
+                        exit(1);
+                    }
+                    else
+                    {
+                        if(curConnector=="")
+                        {
+                            break;
+                        }
+                        else if(curConnector==";")
+                        {}//do nothing and execute next command
+                        else if(curConnector=="||")
+                        {
+                            if (status<=0)
+                            {
+                                break;
+                            }
+                        }
+                        else if(curConnector=="&&")
+                        {
+                            if(status>0)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        
         }
-    
-    
-    
+        
     
     
     delete[] instring;
