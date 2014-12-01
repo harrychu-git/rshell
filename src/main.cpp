@@ -87,11 +87,26 @@ void execute(vector<string> commandlist)
         strcpy(argument[i], commandlist.at(i).c_str());
     }
     checkIO(argument);
-    if(execvp(argument[0], argument)==-1){
-        delete[] argument;
-        perror("execvp");
-        exit(1);
+    char *path = getenv("PATH");
+    vector<string> pathV=tokenizer(path,":");
+    for(unsigned i = 0; i < pathV.size(); i++)
+    {
+
+	string s = argument[0];
+	pathV.at(i)+="/"+s;
+	if(access(const_cast<char*> (pathV.at(i).c_str()), X_OK)==0)
+	{
+	   execv(const_cast<char*> (pathV.at(i).c_str()), argument);
+	   perror("execv");
+	   delete[] argument;
+	   exit(1);
+	}
+    //if(execvp(argument[0], argument)==-1){
+    //    delete[] argument;
+    //    perror("execvp");
+    //    exit(1);
     }
+    perror("access");
 }
 
 
@@ -178,7 +193,7 @@ int main()
     while(1)
     {
         cont:
-        
+       signal(SIGINT, CTRLC); 
         string cmdLine;
         char buffer[BUFSIZ];
 	    if(!getcwd(buffer, sizeof(buffer))) //potential error
@@ -186,8 +201,6 @@ int main()
     	cout<<buffer<<endl;
         cout << getlogin() << "@" << hostname << "$ ";
         getline(cin, cmdLine);
-        if(cmdLine.size()==0)
-            break;
         noCommentZone(cmdLine);
         if(cmdLine.at(0)=='#')//fix bug if everything is a comment
         {
@@ -226,12 +239,12 @@ int main()
             //check if vector has one index and contains "exit"
             if(commandlist.size()==1&&commandlist.at(0)=="exit")
             {
-                cout << commandlist.at(0) << endl;
-                cout << commandlist.at(0) << endl;
+            //    cout << commandlist.at(0) << endl;
+            //    cout << commandlist.at(0) << endl;
                 delete[] instring;
                 goto end;
             }
-            signal(SIGINT, CTRLC);
+            //signal(SIGINT, CTRLC);
             if(commandlist.at(0)=="cd")
             {
                 if(commandlist.size()==1)
@@ -241,9 +254,9 @@ int main()
                 }
                 else
                 {
-                    char tmp[commandlist.size()+1];
-                    strcpy(tmp, commandlist.at(1).c_str());
-                    if(chdir(tmp)==-1)
+                    //char tmp[commandlist.size()+1];
+                    //strcpy(tmp, commandlist.at(1).c_str());
+                    if(chdir(const_cast<char*>(commandlist.at(1).c_str()))==-1)
                         perror("chdir");
                     goto cont;
                     
@@ -291,7 +304,7 @@ int main()
                 delete[] instring;
                 goto end;
             }
-            signal(SIGINT, CTRLC);
+            //signal(SIGINT, CTRLC);
             if(exV.at(i).at(0)=="cd")
             {
                 if(exV.at(i).size()==1)
@@ -301,9 +314,9 @@ int main()
                 }
                 else
                 {
-                    char tmp[exV.at(i).at(1).size()+1];
-                    strcpy(tmp,exV.at(i).at(1).c_str());
-                    if(chdir(tmp)==-1)
+                    //char tmp[exV.at(i).at(1).size()+1];
+                    //strcpy(tmp,exV.at(i).at(1).c_str());
+                    if(chdir(const_cast<char*>(exV.at(i).at(1).c_str()))==-1)
                         perror("chdir");
                 }
                 continue;
