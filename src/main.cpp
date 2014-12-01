@@ -186,6 +186,8 @@ int main()
     	cout<<buffer<<endl;
         cout << getlogin() << "@" << hostname << "$ ";
         getline(cin, cmdLine);
+        if(cmdLine.size()==0)
+            break;
         noCommentZone(cmdLine);
         if(cmdLine.at(0)=='#')//fix bug if everything is a comment
         {
