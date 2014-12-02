@@ -9,6 +9,7 @@
 #include <vector>
 #include <fcntl.h>
 #include <string>
+#include <errno.h>
 using namespace std;
 
 
@@ -78,24 +79,24 @@ void checkIO(char** args)
 
 void execute(vector<string> commandlist)
 {
-    if(commandlist.at(0)=="cd")
-    {
-        if(commandlist.size()==1)
-        {
-            if(chdir(getenv("HOME"))==-1)
-                perror("chdir");
-        }
-        else
-        {
-            //char tmp[commandlist.size()+1];
-            //strcpy(tmp, commandlist.at(1).c_str());
-            if(chdir(const_cast<char*>(commandlist.at(1).c_str()))==-1)
-                    perror("chdir");
+    // if(commandlist.at(0)=="cd")
+    // {
+    //     if(commandlist.size()==1)
+    //     {
+    //         if(chdir(getenv("HOME"))==-1)
+    //             perror("chdir");
+    //     }
+    //     else
+    //     {
+    //         //char tmp[commandlist.size()+1];
+    //         //strcpy(tmp, commandlist.at(1).c_str());
+    //         if(chdir(const_cast<char*>(commandlist.at(1).c_str()))==-1)
+    //                 perror("chdir");
                     
-        }
-    }
-    else
-    {
+    //     }
+    // }
+    //else
+    //{
         unsigned sz=commandlist.size();
         char** argument = new char*[sz+1];
         argument[sz] = '\0';
@@ -139,12 +140,13 @@ void execute(vector<string> commandlist)
 		    else
 			    return;
         }
-        //if(errno)
-	    //{
-	    //	perror("problem with execv. " );
-	    //	exit(1);
-	    //}
-    }
+        exit(1);
+    //     if(errno)
+	   // {
+	   // 	perror("execv");
+	   // 	exit(1);
+	   // }
+    //}
 
 }
 
@@ -247,6 +249,7 @@ int main()
         {
             goto cont;
         }
+        
         connectorFixer(cmdLine); //set up cmdLine to find I/O and pipes
         char *instring=new char[cmdLine.size()+1]; //requires 1 index for '\0'
         strcpy(instring, cmdLine.c_str());
@@ -285,6 +288,22 @@ int main()
                 delete[] instring;
                 goto end;
             }
+            if(commandlist.at(0)=="cd")
+            {
+                if(commandlist.size()==1)
+                {
+                    if(chdir(getenv("HOME"))==-1)
+                        perror("chdir");
+                }
+                else
+                {
+            //char tmp[commandlist.size()+1];
+            //strcpy(tmp, commandlist.at(1).c_str());
+                    if(chdir(const_cast<char*>(commandlist.at(1).c_str()))==-1)
+                        perror("chdir");
+                    
+                }
+        }
             //signal(SIGINT, CTRLC);
 
             int forktest=fork();
@@ -328,6 +347,22 @@ int main()
             {
                 delete[] instring;
                 goto end;
+            }
+            if(exV.at(i).at(0)=="cd")
+            {
+                if(exV.at(i).size()==1)
+                {
+                    if(chdir(getenv("HOME"))==-1)
+                        perror("chdir");
+                }
+                else
+                {
+            //char tmp[commandlist.size()+1];
+            //strcpy(tmp, commandlist.at(1).c_str());
+                    if(chdir(const_cast<char*>(exV.at(i).at(1).c_str()))==-1)
+                            perror("chdir");
+                    
+                }
             }
             else
             {
