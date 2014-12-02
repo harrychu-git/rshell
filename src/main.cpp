@@ -78,35 +78,51 @@ void checkIO(char** args)
 
 void execute(vector<string> commandlist)
 {
-    unsigned sz=commandlist.size();
-    char** argument = new char*[sz+1];
-    argument[sz] = '\0';
-    for(unsigned i=0; i<sz; i++)
+    if(commandlist.at(0)=="cd")
     {
-        argument[i] = new char[commandlist.at(i).size()];
-        strcpy(argument[i], commandlist.at(i).c_str());
+        if(commandlist.size()==1)
+        {
+            if(chdir(getenv("HOME"))==-1)
+                perror("chdir");
+        }
+        else
+        {
+            //char tmp[commandlist.size()+1];
+            //strcpy(tmp, commandlist.at(1).c_str());
+            if(chdir(const_cast<char*>(commandlist.at(1).c_str()))==-1)
+                    perror("chdir");
+                    
+        }
     }
-    checkIO(argument);
-    char *path = getenv("PATH");
-    vector<string> pathV=tokenizer(path,":");
-    for(unsigned i = 0; i < pathV.size(); i++)
+    else
     {
+        unsigned sz=commandlist.size();
+        char** argument = new char*[sz+1];
+        argument[sz] = '\0';
+        for(unsigned i=0; i<sz; i++)
+        {
+            argument[i] = new char[commandlist.at(i).size()];
+            strcpy(argument[i], commandlist.at(i).c_str());
+        }
+        checkIO(argument);
+        char *path = getenv("PATH");
+        vector<string> pathV=tokenizer(path,":");
+        for(unsigned i = 0; i < pathV.size(); i++)
+        {
+    
+    	    string s = argument[0];
+    	    pathV.at(i)+="/"+s;
+    	    if(access(const_cast<char*> (pathV.at(i).c_str()), X_OK)==0)
+    	    {
+    	       execv(const_cast<char*> (pathV.at(i).c_str()), argument);
+    	       perror("execv");
+    	       delete[] argument;
+    	       exit(1);
+    	    }   
+        }
+        perror("access");
+    }
 
-	string s = argument[0];
-	pathV.at(i)+="/"+s;
-	if(access(const_cast<char*> (pathV.at(i).c_str()), X_OK)==0)
-	{
-	   execv(const_cast<char*> (pathV.at(i).c_str()), argument);
-	   perror("execv");
-	   delete[] argument;
-	   exit(1);
-	}
-    //if(execvp(argument[0], argument)==-1){
-    //    delete[] argument;
-    //    perror("execvp");
-    //    exit(1);
-    }
-    perror("access");
 }
 
 
@@ -202,6 +218,8 @@ int main()
         cout << getlogin() << "@" << hostname << "$ ";
         getline(cin, cmdLine);
         noCommentZone(cmdLine);
+        if(cmdLine.size()==0)
+            goto cont;
         if(cmdLine.at(0)=='#')//fix bug if everything is a comment
         {
             goto cont;
@@ -245,23 +263,7 @@ int main()
                 goto end;
             }
             //signal(SIGINT, CTRLC);
-            if(commandlist.at(0)=="cd")
-            {
-                if(commandlist.size()==1)
-                {
-                    if(chdir(getenv("HOME"))==-1)
-                        perror("chdir");
-                }
-                else
-                {
-                    //char tmp[commandlist.size()+1];
-                    //strcpy(tmp, commandlist.at(1).c_str());
-                    if(chdir(const_cast<char*>(commandlist.at(1).c_str()))==-1)
-                        perror("chdir");
-                    goto cont;
-                    
-                }
-            }
+
             int forktest=fork();
             if (forktest==-1)
             {
@@ -303,23 +305,6 @@ int main()
             {
                 delete[] instring;
                 goto end;
-            }
-            //signal(SIGINT, CTRLC);
-            if(exV.at(i).at(0)=="cd")
-            {
-                if(exV.at(i).size()==1)
-                {
-                    if(chdir(getenv("HOME"))==-1)
-                        perror("chdir");
-                }
-                else
-                {
-                    //char tmp[exV.at(i).at(1).size()+1];
-                    //strcpy(tmp,exV.at(i).at(1).c_str());
-                    if(chdir(const_cast<char*>(exV.at(i).at(1).c_str()))==-1)
-                        perror("chdir");
-                }
-                continue;
             }
             else
             {
