@@ -107,20 +107,43 @@ void execute(vector<string> commandlist)
         checkIO(argument);
         char *path = getenv("PATH");
         vector<string> pathV=tokenizer(path,":");
-        for(unsigned i = 0; i < pathV.size(); i++)
-        {
+        // for(unsigned i = 0; i < pathV.size(); i++)
+        // {
     
-    	    string s = argument[0];
-    	    pathV.at(i)+="/"+s;
-    	    if(access(const_cast<char*> (pathV.at(i).c_str()), X_OK)==0)
-    	    {
-    	       execv(const_cast<char*> (pathV.at(i).c_str()), argument);
-    	       perror("execv");
-    	       delete[] argument;
-    	       exit(1);
-    	    }   
+    	   // string s = argument[0];
+    	   // pathV.at(i)+="/"+s;
+    	   // if(access(const_cast<char*> (pathV.at(i).c_str()), X_OK)==0)
+    	   // {
+    	   //    execv(const_cast<char*> (pathV.at(i).c_str()), argument);
+    	   //    perror("execv");
+    	   //    delete[] argument;
+    	   //    exit(1);
+    	   // }   
+        // }
+        // perror("access");
+        for(int i=0; i<pathV.size(); i++)
+        {
+            char check[250]={0};
+            strcpy(check,const_cast<char*>(pathV.at(i).c_str()));
+            if(check[strlen(check)-1] != '/')
+			    strcat(check, "/");
+		    strcat(check,const_cast<char*>(commandlist.at(0).c_str()));
+
+
+		    char *newargv[50] = {0};
+		    newargv[0] = check;
+		    for(int j=1; j<commandlist.size(); j++)
+		    	newargv[j] = const_cast<char*>(commandlist.at(j).c_str());
+
+		    if(-1 == execv(newargv[0], newargv)) ; 
+		    else
+			    return;
         }
-        perror("access");
+        //if(errno)
+	    //{
+	    //	perror("problem with execv. " );
+	    //	exit(1);
+	    //}
     }
 
 }
