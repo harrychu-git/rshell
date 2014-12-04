@@ -122,7 +122,7 @@ void execute(vector<string> commandlist)
     	   // }   
         // }
         // perror("access");
-        for(int i=0; i<pathV.size(); i++)
+        for(unsigned i=0; i<pathV.size(); i++)
         {
             char check[250]={0};
             strcpy(check,const_cast<char*>(pathV.at(i).c_str()));
@@ -133,7 +133,7 @@ void execute(vector<string> commandlist)
 
 		    char *newargv[50] = {0};
 		    newargv[0] = check;
-		    for(int j=1; j<commandlist.size(); j++)
+		    for(unsigned j=1; j<commandlist.size(); j++)
 		    	newargv[j] = const_cast<char*>(commandlist.at(j).c_str());
 
 		    if(-1 == execv(newargv[0], newargv)) ; 
