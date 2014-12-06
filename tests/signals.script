@@ -1,0 +1,408 @@
+Script started on Fri 05 Dec 2014 10:36:53 PM PST
+~
+hchu007@hammer $ ls
+[0m[01;32ma.out[0m*         assn6.asm   ex2.asm          [01;34mlab4cs100[0m/  [01;34mMusic[0m/     temp.cpp
+assn3 (1).asm  [01;34mcs100lab7[0m/  ex3.asm          [01;31mlab5.tgz[0m    [01;34mPictures[0m/  [01;34mTemplates[0m/
+assn3.asm      [01;34mDesktop[0m/    fork.cpp         [01;31mlab7.tgz[0m    [01;34mPublic[0m/    Timer.h
+assn4.asm      [01;34mDocuments[0m/  [01;32mIntVector.cpp[0m*   [01;31mlab8.tgz[0m    rm.cpp     [01;34mucr-cs100[0m/
+assn5 (2).asm  [01;34mDownloads[0m/  [01;32mIntVector.cpp~[0m*  ls.cpp      [01;34mrshell[0m/    [01;34mVideos[0m/
+assn5.asm      ex1.asm     lab3ex1.asm      [01;32mmain.cpp[0m*   [01;34mrshell-1[0m/
+[m~
+hchu007@hammer $ cd rshell
+~/rshell
+hchu007@hammer $ make
+if [ ! -d "./bin" ];\
+	then mkdir bin;\
+	fi
+g++ -Wall -Werror -ansi -pedantic src/main.cpp -o bin/rshell
+g++ -Wall -Werror -ansi -pedantic src/cp.cpp -o bin/cp
+g++ -Wall -Werror -ansi -pedantic src/ls.cpp -o bin/ls
+~/rshell
+hchu007@hammer $ valgrind --leak-check=yes bin/rshell
+==34461== Memcheck, a memory error detector
+==34461== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==34461== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==34461== Command: bin/rshell
+==34461== 
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ ls
+==34462== Invalid write of size 1
+==34462==    at 0x4A080CF: __GI_strcpy (mc_replace_strmem.c:443)
+==34462==    by 0x401E28: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34462==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34462==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34462==  Address 0x4c33b62 is 0 bytes after a block of size 2 alloc'd
+==34462==    at 0x4A07192: operator new[](unsigned long) (vg_replace_malloc.c:363)
+==34462==    by 0x401DEC: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34462==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34462==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34462== 
+==34462== Syscall param execve(argv) points to uninitialised byte(s)
+==34462==    at 0x30508ACDA7: execve (in /lib64/libc-2.12.so)
+==34462==    by 0x401F3F: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34462==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34462==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34462==  Address 0x7fefeaaa8 is on thread 1's stack
+==34462== 
+bin  LICENSE  Makefile	README.md  signals.script  src	tests
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ ls -a
+==34464== Invalid write of size 1
+==34464==    at 0x4A080CF: __GI_strcpy (mc_replace_strmem.c:443)
+==34464==    by 0x401E28: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34464==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34464==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34464==  Address 0x4c38ce2 is 0 bytes after a block of size 2 alloc'd
+==34464==    at 0x4A07192: operator new[](unsigned long) (vg_replace_malloc.c:363)
+==34464==    by 0x401DEC: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34464==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34464==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34464== 
+==34464== Syscall param execve(argv) points to uninitialised byte(s)
+==34464==    at 0x30508ACDA7: execve (in /lib64/libc-2.12.so)
+==34464==    by 0x401F3F: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34464==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34464==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34464==  Address 0x7fefeaab0 is on thread 1's stack
+==34464== 
+.  ..  bin  .git  LICENSE  Makefile  README.md	signals.script	src  tests
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ cd
+==34468== Invalid write of size 1
+==34468==    at 0x4A080CF: __GI_strcpy (mc_replace_strmem.c:443)
+==34468==    by 0x401E28: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==  Address 0x4c3dc22 is 0 bytes after a block of size 2 alloc'd
+==34468==    at 0x4A07192: operator new[](unsigned long) (vg_replace_malloc.c:363)
+==34468==    by 0x401DEC: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468== 
+==34468== Syscall param execve(argv) points to uninitialised byte(s)
+==34468==    at 0x30508ACDA7: execve (in /lib64/libc-2.12.so)
+==34468==    by 0x401F3F: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==  Address 0x7fefeaaa8 is on thread 1's stack
+==34468== 
+==34468== 
+==34468== HEAP SUMMARY:
+==34468==     in use at exit: 831 bytes in 26 blocks
+==34468==   total heap usage: 161 allocs, 135 frees, 65,425 bytes allocated
+==34468== 
+==34468== 27 bytes in 1 blocks are possibly lost in loss record 8 of 11
+==34468==    at 0x4A075FC: operator new(unsigned long) (vg_replace_malloc.c:298)
+==34468==    by 0x3059C9C3C8: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x3059C9D19A: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x3059C9D5EB: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x3059C7BFF4: std::basic_istream<char, std::char_traits<char> >& std::getline<char, std::char_traits<char>, std::allocator<char> >(std::basic_istream<char, std::char_traits<char> >&, std::basic_string<char, std::char_traits<char>, std::allocator<char> >&, char) (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x4029A2: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468== 
+==34468== 27 bytes in 1 blocks are possibly lost in loss record 9 of 11
+==34468==    at 0x4A075FC: operator new(unsigned long) (vg_replace_malloc.c:298)
+==34468==    by 0x3059C9C3C8: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x3059C9CDE4: ??? (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x3059C9CF32: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x4018E1: tokenizer(char*, std::string) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x402E9F: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468== 
+==34468== 596 bytes in 16 blocks are possibly lost in loss record 11 of 11
+==34468==    at 0x4A075FC: operator new(unsigned long) (vg_replace_malloc.c:298)
+==34468==    by 0x3059C9C3C8: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x3059C9CDE4: ??? (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x3059C9CF32: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34468==    by 0x4018E1: tokenizer(char*, std::string) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x401D07: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34468== 
+==34468== LEAK SUMMARY:
+==34468==    definitely lost: 0 bytes in 0 blocks
+==34468==    indirectly lost: 0 bytes in 0 blocks
+==34468==      possibly lost: 650 bytes in 18 blocks
+==34468==    still reachable: 181 bytes in 8 blocks
+==34468==         suppressed: 0 bytes in 0 blocks
+==34468== Reachable blocks (those to which a pointer was found) are not shown.
+==34468== To see them, rerun with: --leak-check=full --show-reachable=yes
+==34468== 
+==34468== For counts of detected and suppressed errors, rerun with: -v
+==34468== Use --track-origins=yes to see where uninitialised values come from
+==34468== ERROR SUMMARY: 20 errors from 5 contexts (suppressed: 6 from 6)
+/home/csmajs/hchu007
+hchu007@hammer.cs.ucr.edu$ cd rshell
+==34469== Invalid write of size 1
+==34469==    at 0x4A080CF: __GI_strcpy (mc_replace_strmem.c:443)
+==34469==    by 0x401E28: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==  Address 0x4c42e12 is 0 bytes after a block of size 2 alloc'd
+==34469==    at 0x4A07192: operator new[](unsigned long) (vg_replace_malloc.c:363)
+==34469==    by 0x401DEC: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469== 
+==34469== Syscall param execve(argv) points to uninitialised byte(s)
+==34469==    at 0x30508ACDA7: execve (in /lib64/libc-2.12.so)
+==34469==    by 0x401F3F: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==  Address 0x7fefeaab0 is on thread 1's stack
+==34469== 
+==34469== 
+==34469== HEAP SUMMARY:
+==34469==     in use at exit: 929 bytes in 28 blocks
+==34469==   total heap usage: 189 allocs, 161 frees, 84,556 bytes allocated
+==34469== 
+==34469== 41 bytes in 1 blocks are possibly lost in loss record 8 of 11
+==34469==    at 0x4A075FC: operator new(unsigned long) (vg_replace_malloc.c:298)
+==34469==    by 0x3059C9C3C8: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x3059C9D19A: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x3059C9D5EB: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x3059C7BFF4: std::basic_istream<char, std::char_traits<char> >& std::getline<char, std::char_traits<char>, std::allocator<char> >(std::basic_istream<char, std::char_traits<char> >&, std::basic_string<char, std::char_traits<char>, std::allocator<char> >&, char) (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x4029A2: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469== 
+==34469== 58 bytes in 2 blocks are possibly lost in loss record 9 of 11
+==34469==    at 0x4A075FC: operator new(unsigned long) (vg_replace_malloc.c:298)
+==34469==    by 0x3059C9C3C8: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x3059C9CDE4: ??? (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x3059C9CF32: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x4018E1: tokenizer(char*, std::string) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x402E9F: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469== 
+==34469== 596 bytes in 16 blocks are possibly lost in loss record 11 of 11
+==34469==    at 0x4A075FC: operator new(unsigned long) (vg_replace_malloc.c:298)
+==34469==    by 0x3059C9C3C8: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x3059C9CDE4: ??? (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x3059C9CF32: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34469==    by 0x4018E1: tokenizer(char*, std::string) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x401D07: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34469== 
+==34469== LEAK SUMMARY:
+==34469==    definitely lost: 0 bytes in 0 blocks
+==34469==    indirectly lost: 0 bytes in 0 blocks
+==34469==      possibly lost: 695 bytes in 19 blocks
+==34469==    still reachable: 234 bytes in 9 blocks
+==34469==         suppressed: 0 bytes in 0 blocks
+==34469== Reachable blocks (those to which a pointer was found) are not shown.
+==34469== To see them, rerun with: --leak-check=full --show-reachable=yes
+==34469== 
+==34469== For counts of detected and suppressed errors, rerun with: -v
+==34469== Use --track-origins=yes to see where uninitialised values come from
+==34469== ERROR SUMMARY: 21 errors from 5 contexts (suppressed: 6 from 6)
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ sdgljdg
+==34470== Invalid write of size 1
+==34470==    at 0x4A080CF: __GI_strcpy (mc_replace_strmem.c:443)
+==34470==    by 0x401E28: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==  Address 0x4c47e27 is 0 bytes after a block of size 7 alloc'd
+==34470==    at 0x4A07192: operator new[](unsigned long) (vg_replace_malloc.c:363)
+==34470==    by 0x401DEC: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470== 
+==34470== Syscall param execve(argv) points to uninitialised byte(s)
+==34470==    at 0x30508ACDA7: execve (in /lib64/libc-2.12.so)
+==34470==    by 0x401F3F: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==  Address 0x7fefeaaa8 is on thread 1's stack
+==34470== 
+execv: No such file or directory
+==34470== 
+==34470== HEAP SUMMARY:
+==34470==     in use at exit: 852 bytes in 26 blocks
+==34470==   total heap usage: 211 allocs, 185 frees, 104,075 bytes allocated
+==34470== 
+==34470== 32 bytes in 1 blocks are possibly lost in loss record 8 of 11
+==34470==    at 0x4A075FC: operator new(unsigned long) (vg_replace_malloc.c:298)
+==34470==    by 0x3059C9C3C8: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x3059C9CDE4: ??? (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x3059C9CF32: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x4018E1: tokenizer(char*, std::string) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x402E9F: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470== 
+==34470== 33 bytes in 1 blocks are possibly lost in loss record 9 of 11
+==34470==    at 0x4A075FC: operator new(unsigned long) (vg_replace_malloc.c:298)
+==34470==    by 0x3059C9C3C8: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x3059C9D19A: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x3059C9D5EB: std::string::reserve(unsigned long) (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x3059C7BFF4: std::basic_istream<char, std::char_traits<char> >& std::getline<char, std::char_traits<char>, std::allocator<char> >(std::basic_istream<char, std::char_traits<char> >&, std::basic_string<char, std::char_traits<char>, std::allocator<char> >&, char) (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x4029A2: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470== 
+==34470== 596 bytes in 16 blocks are possibly lost in loss record 11 of 11
+==34470==    at 0x4A075FC: operator new(unsigned long) (vg_replace_malloc.c:298)
+==34470==    by 0x3059C9C3C8: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x3059C9CDE4: ??? (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x3059C9CF32: std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) (in /usr/lib64/libstdc++.so.6.0.13)
+==34470==    by 0x4018E1: tokenizer(char*, std::string) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x401D07: execute(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x40260E: pipes1(std::vector<std::string, std::allocator<std::string> >) (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470==    by 0x403098: main (in /home/csmajs/hchu007/rshell/bin/rshell)
+==34470== 
+==34470== LEAK SUMMARY:
+==34470==    definitely lost: 0 bytes in 0 blocks
+==34470==    indirectly lost: 0 bytes in 0 blocks
+==34470==      possibly lost: 661 bytes in 18 blocks
+==34470==    still reachable: 191 bytes in 8 blocks
+==34470==         suppressed: 0 bytes in 0 blocks
+==34470== Reachable blocks (those to which a pointer was found) are not shown.
+==34470== To see them, rerun with: --leak-check=full --show-reachable=yes
+==34470== 
+==34470== For counts of detected and suppressed errors, rerun with: -v
+==34470== Use --track-origins=yes to see where uninitialised values come from
+==34470== ERROR SUMMARY: 20 errors from 5 contexts (suppressed: 6 from 6)
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ exit
+==34461== 
+==34461== HEAP SUMMARY:
+==34461==     in use at exit: 0 bytes in 0 blocks
+==34461==   total heap usage: 205 allocs, 205 frees, 121,543 bytes allocated
+==34461== 
+==34461== All heap blocks were freed -- no leaks are possible
+==34461== 
+==34461== For counts of detected and suppressed errors, rerun with: -v
+==34461== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 6)
+~/rshell
+hchu007@hammer $ ../ucr-cs100/scripts/checksyscalls.sh src/main.cpp
+
+lines with syscalls:
+  
+  018:  [1;31m[Ksignal(SIGINT,SIG_IGN)[m[K
+  050:  [1;31m[Kopen(args[i+1],O_RDONLY)[m[K
+  051:  [1;32m[Kperror()[m[K;
+  052:  [1;31m[Kdup2(fd,0)[m[K
+  053:  [1;32m[Kperror()[m[K;
+  061:  [1;31m[Kopen(args[i+2],O_CREAT|O_WRONLY|O_APPEND,0666)[m[K
+  062:  [1;32m[Kperror()[m[K;
+  063:  [1;31m[Kdup2(fd,1)[m[K
+  064:  [1;32m[Kperror()[m[K;
+  070:  [1;31m[Kopen(args[i+1],O_CREAT|O_WRONLY|O_TRUNC,0666)[m[K
+  071:  [1;32m[Kperror()[m[K;
+  072:  [1;31m[Kdup2(fd,1)[m[K
+  073:  [1;32m[Kperror()[m[K;
+  109:  [1;31m[Kexecv(myargv[0], myargv)[m[K
+  116:  [1;32m[Kperror()[m[K;
+  166:  [1;31m[Kpipe(fd)[m[K
+  167:  [1;32m[Kperror()[m[K;
+  168:  [1;31m[Kfork()[m[K
+  170:  [1;32m[Kperror()[m[K;
+  174:  [1;31m[Kdup2(fd[1],1)[m[K
+  175:  [1;32m[Kperror()[m[K;
+  177:  [1;32m[Kperror()[m[K;
+  184:  [1;31m[Kdup(0)[m[K
+  185:  [1;32m[Kperror()[m[K;
+  186:  [1;31m[Kdup2(fd[0],0)[m[K
+  187:  [1;32m[Kperror()[m[K;
+  189:  [1;32m[Kperror()[m[K;
+  190:  [1;31m[Kwaitpid(-1, &status, 0)[m[K
+  191:  [1;32m[Kperror()[m[K;
+  193:  [1;31m[Kdup2(restore,0)[m[K
+  194:  [1;32m[Kperror()[m[K;
+  203:  [1;31m[Kgethostname(hostname,sizeof hostname)[m[K
+  205:  [1;32m[Kperror()[m[K;
+  208:  [1;31m[Ksignal(SIGINT, CTRLC)[m[K
+  214:  [1;31m[Kgetcwd(buffer, sizeof(buffer)[m[K
+  215:  [1;32m[Kperror()[m[K;
+  217:  [1;31m[Kgetlogin()[m[K
+  219:  [1;32m[Kperror()[m[K;
+  271:  [1;31m[Kchdir(getenv()[m[K
+  272:  [1;32m[Kperror()[m[K;
+  277:  [1;31m[Kchdir(const_cast<char*>(commandlist.at(1)[m[K
+  278:  [1;32m[Kperror()[m[K;
+  283:  [1;31m[Kfork()[m[K
+  286:  [1;32m[Kperror()[m[K;
+  295:  [1;31m[Kwaitpid(-1, &status, 0)[m[K
+  297:  [1;32m[Kperror()[m[K;
+  329:  [1;31m[Kchdir(getenv()[m[K
+  330:  [1;32m[Kperror()[m[K;
+  336:  [1;31m[Kchdir(const_cast<char*>(exV.at(i)[m[K
+  337:  [1;32m[Kperror()[m[K;
+  343:  [1;31m[Kfork()[m[K
+  346:  [1;32m[Kperror()[m[K;
+  355:  [1;31m[Kwaitpid(-1, &status, 0)[m[K 
+  357:  [1;32m[Kperror()[m[K;
+
+summary:
+  number of syscalls... 27
+  number of perror..... 27
+  grade modifier....... -0
+~/rshell
+hchu007@hammer $ bin/rshell
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ #begin testing
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ #test   regular commands
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ ls
+bin  LICENSE  Makefile	README.md  signals.script  src	tests
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ ls -a
+.  ..  bin  .git  LICENSE  Makefile  README.md	signals.script	src  tests
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ dslfjgdsfg
+execv: No such file or directory
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ 
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ #comment
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ test      #test cd
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ cd  ls
+bin  LICENSE  Makefile	README.md  signals.script  src	tests
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ cd
+/home/csmajs/hchu007
+hchu007@hammer.cs.ucr.edu$ ls
+a.out	       assn6.asm  ex2.asm	  lab4cs100  Music     temp.cpp
+assn3 (1).asm  cs100lab7  ex3.asm	  lab5.tgz   Pictures  Templates
+assn3.asm      Desktop	  fork.cpp	  lab7.tgz   Public    Timer.h
+assn4.asm      Documents  IntVector.cpp   lab8.tgz   rm.cpp    ucr-cs100
+assn5 (2).asm  Downloads  IntVector.cpp~  ls.cpp     rshell    Videos
+assn5.asm      ex1.asm	  lab3ex1.asm	  main.cpp   rshell-1
+/home/csmajs/hchu007
+hchu007@hammer.cs.ucr.edu$ cd rshell
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ cd ..
+/home/csmajs/hchu007
+hchu007@hammer.cs.ucr.edu$ cd rshel     ./rshell/src
+/home/csmajs/hchu007/rshell/src
+hchu007@hammer.cs.ucr.edu$ ls
+cp.cpp	ls.cpp	main.cpp  Timer.h
+/home/csmajs/hchu007/rshell/src
+hchu007@hammer.cs.ucr.edu$ cd ..
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ notarealcommand
+execv: No such file or directory
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ ls
+bin  LICENSE  Makefile	README.md  signals.script  src	tests
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ cat   ls
+bin  LICENSE  Makefile	README.md  signals.script  src	tests
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ cat
+exit
+exit
+
+[1]+  Stopped                 bin/rshell
+~/rshell
+hchu007@hammer $ i[Kbin/rshell
+/home/csmajs/hchu007/rshell
+hchu007@hammer.cs.ucr.edu$ exit
+~/rshell
+hchu007@hammer $ #finished script
+~/rshell
+hchu007@hammer $ exit
+exit
+There are stopped jobs.
+~/rshell
+hchu007@hammer $ exit
+exit
+
+Script done on Fri 05 Dec 2014 10:40:30 PM PST
