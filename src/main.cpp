@@ -92,7 +92,7 @@ void execute(vector<string> commandlist)
         checkIO(argument);
 
 
-        for(int i=0; i<pathV.size(); i++)
+        for(unsigned i=0; i<pathV.size(); i++)
         {
             char charholder[BUFSIZ];
             strcpy(charholder,const_cast<char*>(pathV.at(i).c_str()));
@@ -102,7 +102,8 @@ void execute(vector<string> commandlist)
 
 		    char *myargv[BUFSIZ];
 		    myargv[0] = charholder;
-		    for(int j=1; j<commandlist.size(); j++)
+		    
+		    for(unsigned j=1; j<commandlist.size(); j++)
 		    	myargv[j] = const_cast<char*>(commandlist.at(j).c_str());
 
 		    if(-1 == execv(myargv[0], myargv)) ; 
@@ -110,10 +111,14 @@ void execute(vector<string> commandlist)
 			    return;
         }
 
-        if(errno)
+        if(errno&&commandlist.at(0)!="cd")
 	    {
 	    	perror("execv");
 	    	exit(1);
+	    }
+	    else if(commandlist.at(0)=="cd")
+	    {
+	        exit(1);
 	    }
 
 }
@@ -322,7 +327,8 @@ int main()
                 }
                 else
                 {
-
+            //char tmp[commandlist.size()+1];
+            //strcpy(tmp, commandlist.at(1).c_str());
                     if(chdir(const_cast<char*>(exV.at(i).at(1).c_str()))==-1)
                             perror("chdir");
                     
