@@ -82,17 +82,11 @@ void execute(vector<string> commandlist)
         char *path = getenv("PATH");
         vector<string> pathV=tokenizer(path,":");
         unsigned sz=commandlist.size();
-        char** argument = new char*[sz+1];
-        argument[sz] = '\0';
-        for(unsigned i=0; i<sz; i++)
-        {
-            argument[i] = new char[commandlist.at(i).size()];
-            strcpy(argument[i], commandlist.at(i).c_str());
-        }
-        checkIO(argument);
+
+        
 
 
-        for(unsigned i=0; i<pathV.size(); i++)
+        for(int i=0; i<pathV.size(); i++)
         {
             char charholder[BUFSIZ];
             strcpy(charholder,const_cast<char*>(pathV.at(i).c_str()));
@@ -100,11 +94,13 @@ void execute(vector<string> commandlist)
 		    strcat(charholder,const_cast<char*>(commandlist.at(0).c_str()));
 
 
-		    char *myargv[BUFSIZ];
+		    char *myargv[sz+1];
+		    myargv[sz]='\0';
 		    myargv[0] = charholder;
 		    
-		    for(unsigned j=1; j<commandlist.size(); j++)
+		    for(int j=1; j<commandlist.size(); j++)
 		    	myargv[j] = const_cast<char*>(commandlist.at(j).c_str());
+		    checkIO(myargv);
 
 		    if(-1 == execv(myargv[0], myargv)) ; 
 		    else
@@ -204,19 +200,16 @@ int main()
     {
         perror("gethostname");
     }
+    signal(SIGINT, CTRLC); 
     while(1)
     {
         cont:
-       signal(SIGINT, CTRLC); 
         string cmdLine;
         char buffer[BUFSIZ];
 	    if(!getcwd(buffer, sizeof(buffer))) //potential error
 	    	perror("getcwd");
     	cout<<buffer<<endl;
-        char* lognm=getlogin();
-	if(lognm==0)
-		perror("getlogin");
-	cout << lognm << "@" << hostname << "$ ";
+        cout << getlogin() << "@" << hostname << "$ ";
         getline(cin, cmdLine);
         noCommentZone(cmdLine);
         if(cmdLine.size()==0)
