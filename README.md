@@ -50,13 +50,6 @@ KNOWN BUGS
 
 
 
-
-
-
-Report unknown bugs to hchu007@ucr.edu.
-
-
-
 LS By: Harry Chu
 ----------------------------------
 ls is a bash command that lists all folders and files in your current directory. ls can be used with 3 flags and can take any file or folder name as a parameter. 
@@ -102,27 +95,10 @@ KNOWN BUGS
 
 
 
-
-
-Report unknown bugs to hchu007@ucr.edu.
-
-
-
-
-
-
 I/O Redirection and Piping By: Harry Chu
 ----------------------------------
 As of November 18th, 2014, rshell is now capable of piping and input/output redirection. Input and output redirection allows input and output beyond the use of stdin, stdout, and stderr. Piping is used to connect multiple data processes.
 
-HOW TO RUN
-----------------------------------
-Open rshell by executing the following commands in your terminal or git shell
-- git clone  http://github.com/hchu007/rshell.git
-- cd rshell
-- git checkout hw0
-- make
-- bin/rshell
 
 HOW TO USE I/O REDIRECTION & PIPING
 ------------------------------------
@@ -148,6 +124,23 @@ KNOWN BUGS
 
 
 
+Signals By: Harry Chu
+----------------------------------
+As of December 5th, 2014, rshell is now capable of using the PATH variable to find commands, interruption of foreground processes with ^C, and the use of the "cd" command.
+
+HOW TO USE NEW RSHELL
+----------------------------------
+- Typing "cd" will change directories to the HOME path.
+- Typing "cd" with another parameter will change directories to the parameter passed in.
+- Pressing CTRL + C will interrupt a foreground process.
+- In order to exit rshell, type "exit" (CTRL + C will not work!)
+
+KNOWN BUGS
+----------------------------------
+- cd will not work with connectors.
+- ^C will sometimes not terminate the foreground process and rshell must be "killed" with ^Z.
+- ^C will display on the screen.
+- cd cannot support more than one parameter.
 
 
 
