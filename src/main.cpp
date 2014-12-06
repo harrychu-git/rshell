@@ -79,24 +79,8 @@ void checkIO(char** args)
 
 void execute(vector<string> commandlist)
 {
-    // if(commandlist.at(0)=="cd")
-    // {
-    //     if(commandlist.size()==1)
-    //     {
-    //         if(chdir(getenv("HOME"))==-1)
-    //             perror("chdir");
-    //     }
-    //     else
-    //     {
-    //         //char tmp[commandlist.size()+1];
-    //         //strcpy(tmp, commandlist.at(1).c_str());
-    //         if(chdir(const_cast<char*>(commandlist.at(1).c_str()))==-1)
-    //                 perror("chdir");
-                    
-    //     }
-    // }
-    //else
-    //{
+        char *path = getenv("PATH");
+        vector<string> pathV=tokenizer(path,":");
         unsigned sz=commandlist.size();
         char** argument = new char*[sz+1];
         argument[sz] = '\0';
@@ -106,47 +90,31 @@ void execute(vector<string> commandlist)
             strcpy(argument[i], commandlist.at(i).c_str());
         }
         checkIO(argument);
-        char *path = getenv("PATH");
-        vector<string> pathV=tokenizer(path,":");
-        // for(unsigned i = 0; i < pathV.size(); i++)
-        // {
-    
-    	   // string s = argument[0];
-    	   // pathV.at(i)+="/"+s;
-    	   // if(access(const_cast<char*> (pathV.at(i).c_str()), X_OK)==0)
-    	   // {
-    	   //    execv(const_cast<char*> (pathV.at(i).c_str()), argument);
-    	   //    perror("execv");
-    	   //    delete[] argument;
-    	   //    exit(1);
-    	   // }   
-        // }
-        // perror("access");
-        for(unsigned i=0; i<pathV.size(); i++)
+
+
+        for(int i=0; i<pathV.size(); i++)
         {
-            char check[250]={0};
-            strcpy(check,const_cast<char*>(pathV.at(i).c_str()));
-            if(check[strlen(check)-1] != '/')
-			    strcat(check, "/");
-		    strcat(check,const_cast<char*>(commandlist.at(0).c_str()));
+            char charholder[BUFSIZ];
+            strcpy(charholder,const_cast<char*>(pathV.at(i).c_str()));
+			strcat(charholder, "/");
+		    strcat(charholder,const_cast<char*>(commandlist.at(0).c_str()));
 
 
-		    char *newargv[50] = {0};
-		    newargv[0] = check;
-		    for(unsigned j=1; j<commandlist.size(); j++)
-		    	newargv[j] = const_cast<char*>(commandlist.at(j).c_str());
+		    char *myargv[BUFSIZ];
+		    myargv[0] = charholder;
+		    for(int j=1; j<commandlist.size(); j++)
+		    	myargv[j] = const_cast<char*>(commandlist.at(j).c_str());
 
-		    if(-1 == execv(newargv[0], newargv)) ; 
+		    if(-1 == execv(myargv[0], myargv)) ; 
 		    else
 			    return;
         }
-        exit(1);
-    //     if(errno)
-	   // {
-	   // 	perror("execv");
-	   // 	exit(1);
-	   // }
-    //}
+
+        if(errno)
+	    {
+	    	perror("execv");
+	    	exit(1);
+	    }
 
 }
 
@@ -283,8 +251,7 @@ int main()
             //check if vector has one index and contains "exit"
             if(commandlist.size()==1&&commandlist.at(0)=="exit")
             {
-            //    cout << commandlist.at(0) << endl;
-            //    cout << commandlist.at(0) << endl;
+
                 delete[] instring;
                 goto end;
             }
@@ -297,14 +264,12 @@ int main()
                 }
                 else
                 {
-            //char tmp[commandlist.size()+1];
-            //strcpy(tmp, commandlist.at(1).c_str());
+
                     if(chdir(const_cast<char*>(commandlist.at(1).c_str()))==-1)
                         perror("chdir");
                     
                 }
         }
-            //signal(SIGINT, CTRLC);
 
             int forktest=fork();
             if (forktest==-1)
@@ -357,8 +322,7 @@ int main()
                 }
                 else
                 {
-            //char tmp[commandlist.size()+1];
-            //strcpy(tmp, commandlist.at(1).c_str());
+
                     if(chdir(const_cast<char*>(exV.at(i).at(1).c_str()))==-1)
                             perror("chdir");
                     
