@@ -213,7 +213,10 @@ int main()
 	    if(!getcwd(buffer, sizeof(buffer))) //potential error
 	    	perror("getcwd");
     	cout<<buffer<<endl;
-        cout << getlogin() << "@" << hostname << "$ ";
+        char* lognm=getlogin();
+	if(lognm==0)
+		perror("getlogin");
+	cout << lognm << "@" << hostname << "$ ";
         getline(cin, cmdLine);
         noCommentZone(cmdLine);
         if(cmdLine.size()==0)
