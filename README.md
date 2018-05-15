@@ -21,7 +21,7 @@ Usable connectors are:
 -"||"
 
 HOW TO RUN
-----------------------------------
+-----------------------------------
 Open rshell by executing the following commands in your terminal or git shell
 - git clone  http://github.com/hchu007/rshell.git
 - cd rshell
@@ -30,7 +30,7 @@ Open rshell by executing the following commands in your terminal or git shell
 - bin/rshell
 
 CONNECTORS
-----------------------------------
+-----------------------------------
 -The ";" connector will execute all commands in order.
 -The "&&" connector will not execute a command if the previous command failed.
 -The "||" connector will not execute a command if the previous command succeeded.
@@ -39,7 +39,7 @@ Currently, this version of rshell does not support multiple types of connectors 
 
 
 KNOWN BUGS
-----------------------------------
+-----------------------------------
 - When a command is typed in with multiple connectors side by side, ("; ;", "&& &&", "|| ||")
   it does not output an error message.
 
@@ -51,11 +51,11 @@ KNOWN BUGS
 
 
 LS By: Harry Chu
-----------------------------------
+-----------------------------------
 ls is a bash command that lists all folders and files in your current directory. ls can be used with 3 flags and can take any file or folder name as a parameter. 
 
 Flags
-----------------------------------
+-----------------------------------
 -a lists hidden files
 
 -l lists descriptions of each file or folder including
@@ -69,11 +69,11 @@ Flags
 -R is a recursive call that lists all the files and the files inside each folder
 
 Parameters
-----------------------------------
+-----------------------------------
 Files and folders can also be used as parameters. When this happens, ls prints out the files and folders FROM THE PARAMETER passed in.
 
 HOW TO RUN
-----------------------------------
+-----------------------------------
 Open ls by executing the following commands in your terminal or git shell
 - git clone  http://github.com/hchu007/rshell.git
 - cd rshell
@@ -83,7 +83,7 @@ Open ls by executing the following commands in your terminal or git shell
 
 
 KNOWN BUGS
-----------------------------------
+-----------------------------------
 - The formatting for the -l flag is off
 - Every output is printed all on one line
 - The output when using -R lists the next folder being output as a folder inside the folder currently being output
@@ -96,12 +96,12 @@ KNOWN BUGS
 
 
 I/O Redirection and Piping By: Harry Chu
-----------------------------------
+-----------------------------------
 As of November 18th, 2014, rshell is now capable of piping and input/output redirection. Input and output redirection allows input and output beyond the use of stdin, stdout, and stderr. Piping is used to connect multiple data processes.
 
 
 HOW TO USE I/O REDIRECTION & PIPING
-------------------------------------
+-------------------------------------
 There are three symbols for I/O redirection ('<', '>', ">>") and one for piping ('|').
 1. < is used to accept input from a file as opposed to stdin. For example...
   - wc -l < main.cpp    will count the amount of lines in main.cpp and output it to stdout.
@@ -117,7 +117,7 @@ All of these symbols can be chained together in the same command. Here are some 
  - wc -l < README > readmeLines.txt will count the lines in README and store it in readmeLines.txt
 
 KNOWN BUGS
-----------------------------------
+-----------------------------------
 - Cannot handle multiple connectors of the same type. However, using two different connectors will still work.
 - Sometimes creates junk files while using output redirection (results have not been duplicated).
 - Some invalid commands will create an infinite loop that must be stopped/killed/interrupted.
@@ -125,11 +125,11 @@ KNOWN BUGS
 
 
 Signals By: Harry Chu
-----------------------------------
+-----------------------------------
 As of December 5th, 2014, rshell is now capable of using the PATH variable to find commands, interruption of foreground processes with ^C, and the use of the "cd" command.
 
 HOW TO USE NEW RSHELL
-----------------------------------
+-----------------------------------
 - Typing "cd" will change directories to the HOME path.
 - Typing "cd" with another parameter will change directories to the parameter passed in.
 - Pressing CTRL + C will interrupt a foreground process.
